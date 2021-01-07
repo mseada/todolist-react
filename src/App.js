@@ -1,6 +1,7 @@
 import React , { Component } from "react";
 import Todos from './components/Todos';
 import './App.css';
+import Header from "./components/layout/header";
 
 
 class App  extends Component {
@@ -11,7 +12,7 @@ todos : [
 
   id: 1, 
   title: 'take out for dinner' , 
-  completed: true  
+  completed: false  
 } , 
 {
   id: 2, 
@@ -26,12 +27,27 @@ todos : [
 }
 ] }
 
+delTodo = (id) => {
+this.setState({todos: [...this.state.todos.filter(todo =>todo.id !==id)]}) ;
+
+}
+
+markComplete = (id) => {
+this.setState({todos: this.state.todos.map(todo =>{
+if(todo.id === id) {
+
+  todo.completed=! todo.completed
+}
+return todo ; })
+}) ; 
+}
 
 render (){
 console.log(this.state.todos)
 return (
 <div className ="App">
-<Todos todos={this.state.todos}/>
+  <Header>Header</Header>
+<Todos todos={this.state.todos} markComplete={this.markComplete} delTodo = {this.delTodo} />
 </div>
 
     ) ; 
@@ -39,8 +55,6 @@ return (
 } 
 
 }
-    
-
-
+  
 export default App;
 
